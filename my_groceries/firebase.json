@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"warp-chats","appId":"1:782102620471:android:1a0d1d26dfb02eeca8d2b2","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"warp-chats","configurations":{"android":"1:782102620471:android:1a0d1d26dfb02eeca8d2b2","ios":"1:782102620471:ios:681d4ff9b7a0ffcba8d2b2"}}}}}}
