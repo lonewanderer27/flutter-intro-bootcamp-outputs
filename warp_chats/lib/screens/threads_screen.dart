@@ -22,10 +22,6 @@ class _ThreadsScreenState extends State<ThreadsScreen> {
     _setupPushNotifications();
   }
 
-  void _handleLogout() {
-    FirebaseAuth.instance.signOut();
-  }
-
   Future<void> _setupPushNotifications() async {
     // request permission for push notifications
     final fcm = FirebaseMessaging.instance;
@@ -56,49 +52,35 @@ class _ThreadsScreenState extends State<ThreadsScreen> {
           snapshot.docs.map((thread) => thread.id).toList());
     });
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Warp Chats'),
-          actions: [
-            IconButton(
-              onPressed: _handleLogout,
-              icon: Icon(Icons.exit_to_app),
-              color: Theme.of(context).colorScheme.primary,
-            )
-          ],
-        ),
-        body: StreamBuilder(
-            stream: myThreads,
-            builder: (ctx, threadsSnapshot) {
-              if (threadsSnapshot.connectionState == ConnectionState.waiting) {
-                // TODO: Return a Skeletonizer items loading
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+    return StreamBuilder(
+        stream: myThreads,
+        builder: (ctx, threadsSnapshot) {
+          if (threadsSnapshot.connectionState == ConnectionState.waiting) {
+            // TODO: Return a Skeletonizer items loading
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-              if (!threadsSnapshot.hasData ||
-                  threadsSnapshot.data!.docs.isEmpty) {
-                return const Center(
-                  child: Text('Hi there! Quite empty no?'),
-                );
-              }
+          if (!threadsSnapshot.hasData || threadsSnapshot.data!.docs.isEmpty) {
+            return const Center(
+              child: Text('Hi there! Quite empty no?'),
+            );
+          }
 
-              final loadedThreads = threadsSnapshot.data!.docs;
+          final loadedThreads = threadsSnapshot.data!.docs;
 
-              return ListView.builder(
-                  itemCount: loadedThreads.length,
-                  itemBuilder: (ctx, index) {
-                    // create a new Thread item
+          return ListView.builder(
+              itemCount: loadedThreads.length,
+              itemBuilder: (ctx, index) {
+                // create a new Thread item
 
-                    Thread thread = Thread(
-                        id: loadedThreads[index].id,
-                        name: loadedThreads[index].get('name'));
+                Thread thread = Thread(
+                    id: loadedThreads[index].id,
+                    name: loadedThreads[index].get('name'));
 
-                    return ThreadItem(thread);
-                  });
-            }),
-        floatingActionButton:
-            FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)));
+                return ThreadItem(thread);
+              });
+        });
   }
 }

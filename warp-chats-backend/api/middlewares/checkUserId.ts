@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction, Request } from "express";
 import { STATUS } from "../enums/status_enum";
 
 export const checkUserId = (
@@ -6,7 +6,9 @@ export const checkUserId = (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = req.params.userId;
+  console.log(`User ID param: ${req.params.userId}`)
+  console.log(`User ID body: ${req.body.userId}`)
+  const userId = req.params.userId || req.body.userId;
 
   if (!userId) {
     return res.status(400).send({

@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:warp_chats/models/chat.dart';
 import 'package:warp_chats/screens/signin_screen.dart';
 
 class ChatItem extends StatefulWidget {
-  const ChatItem(this.chat, {super.key, this.showDateTime = false});
+  const ChatItem(this.chat,
+      {super.key, this.showDateTime = false, this.showAvatar = false});
   final Chat chat;
   final bool showDateTime;
+  final bool showAvatar;
 
   @override
   State<ChatItem> createState() => _ChatItemState();
@@ -43,6 +47,25 @@ class _ChatItemState extends State<ChatItem> {
       formattedDate = 'Today at $formattedDate';
     }
 
+    var avatarWidget = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: ClipOval(
+        child: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(shape: BoxShape.circle),
+          child: (widget.showAvatar && widget.chat.avatar?.base64 != null)
+              ? Image.memory(
+                  base64Decode(widget.chat.avatar!.base64),
+                  fit: BoxFit.cover,
+                )
+              : SizedBox(
+                  width: 40,
+                ),
+        ),
+      ),
+    );
+
     return Expanded(
         child: InkWell(
       onTap: _toggleDateTime,
@@ -51,6 +74,7 @@ class _ChatItemState extends State<ChatItem> {
         // if it's others, we display it to the left
         mainAxisAlignment: me ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
+          if (!me) avatarWidget,
           Card(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
@@ -72,7 +96,8 @@ class _ChatItemState extends State<ChatItem> {
                 ],
               ),
             ),
-          )
+          ),
+          if (me) avatarWidget
         ],
       ),
     ));

@@ -8,6 +8,7 @@ import 'package:warp_chats/models/chat.dart';
 import 'package:warp_chats/models/thread.dart';
 import 'package:warp_chats/screens/signin_screen.dart';
 import 'package:warp_chats/widgets/chat_item.dart';
+import 'package:warp_chats/widgets/dialogs/warp_thread_dialog.dart';
 import 'package:warp_chats/widgets/empty_chat.dart';
 import 'package:http/http.dart' as http;
 
@@ -68,7 +69,7 @@ class _ThreadScreenState extends State<ThreadScreen> {
 
       // send request to backend for notification
       final res = await http.post(Uri.parse(
-          '$backendUrl/threads/${widget.thread.id}/chats/${chatRef.id}/notifications'));
+          '$backendUrl/notifications/threads/${widget.thread.id}/chats/${chatRef.id}'));
 
       debugPrint('Notification: ${res.body}');
     } catch (error) {
@@ -95,6 +96,15 @@ class _ThreadScreenState extends State<ThreadScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) => WarpThreadDialog(widget.thread.id));
+              },
+              icon: Icon(Icons.share))
+        ],
         title: Row(
           children: [
             StreamBuilder(
@@ -104,6 +114,11 @@ class _ThreadScreenState extends State<ThreadScreen> {
                     backgroundColor: Colors.white,
                     child: Icon(Icons.person, size: 25),
                   );
+
+                  if (usersSnapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return icon;
+                  }
 
                   // display our own profile picture if we're on our own chat
                   if (usersSnapshot.hasData &&
@@ -198,8 +213,7 @@ class _ThreadScreenState extends State<ThreadScreen> {
                                 loadedChats[index].get('createdAt')),
                             message: loadedChats[index].get('message'),
                             userId: loadedChats[index].get('userId'),
-                            // TODO: Replace with actual username
-                            userName: 'user 🤩');
+                            username: 'user 🤩');
 
                         return ChatItem(
                           chat,
