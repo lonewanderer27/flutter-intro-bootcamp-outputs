@@ -8,7 +8,7 @@
 PRODUCT_NAME = my_groceries
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = id.thedev.jay.myGroceries
+PRODUCT_BUNDLE_IDENTIFIER = id.thedev.jay.mygroceries.myGroceries
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2025 id.thedev.jay. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2025 id.thedev.jay.my_groceries. All rights reserved.

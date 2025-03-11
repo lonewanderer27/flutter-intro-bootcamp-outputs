@@ -89,11 +89,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "id.thedev.jay" "\0"
+            VALUE "CompanyName", "id.thedev.jay.my_groceries" "\0"
             VALUE "FileDescription", "my_groceries" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "my_groceries" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 id.thedev.jay. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 id.thedev.jay.my_groceries. All rights reserved." "\0"
             VALUE "OriginalFilename", "my_groceries.exe" "\0"
             VALUE "ProductName", "my_groceries" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
