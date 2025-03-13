@@ -3,6 +3,7 @@ import 'package:my_groceries/features/groceries/domain/entities/grocery_item_ent
 import 'package:either_dart/either.dart';
 
 abstract class GroceryRepository {
+  Either<Exception, Stream<List<GroceryItemEntity>>> watchGroceries();
   Future<Either<Exception, GroceryItemEntity?>> getGrocery(String id);
 
   Future<Either<Exception, List<GroceryItemEntity>>> getGroceries();

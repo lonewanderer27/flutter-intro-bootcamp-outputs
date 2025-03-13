@@ -2,18 +2,26 @@ import 'package:either_dart/either.dart';
 import 'package:my_groceries/features/groceries/data/datasources/groceries_remote_datasource_impl.dart';
 import 'package:my_groceries/features/groceries/data/models/category_model.dart';
 import 'package:my_groceries/features/groceries/data/models/grocery_item_model.dart';
-import 'package:my_groceries/features/groceries/domain/entities/grocery_item_entity.dart';
 import 'package:my_groceries/features/groceries/domain/repositories/grocery_repository.dart';
 
 class GroceryRepositoryImpl implements GroceryRepository {
-  final GroceriesRemoteDatasourceImpl ds = GroceriesRemoteDatasourceImpl();
+  final GroceriesRemoteDatasourceImpl datasource;
 
-  GroceryRepositoryImpl();
+  GroceryRepositoryImpl(this.datasource);
 
   @override
-  Future<Either<Exception, List<GroceryItemEntity>>> getGroceries() async {
+  Either<Exception, Stream<List<GroceryItemModel>>> watchGroceries() {
     try {
-      return Right(await ds.getGroceries());
+      return Right(datasource.watchGroceries());
+    } catch (error) {
+      return Left(Exception(error));
+    }
+  }
+
+  @override
+  Future<Either<Exception, List<GroceryItemModel>>> getGroceries() async {
+    try {
+      return Right(await datasource.getGroceries());
     } catch (error) {
       return Left(Exception(error));
     }
@@ -22,7 +30,7 @@ class GroceryRepositoryImpl implements GroceryRepository {
   @override
   Future<Either<Exception, GroceryItemModel?>> getGrocery(String id) async {
     try {
-      return Right(await ds.getGrocery(id));
+      return Right(await datasource.getGrocery(id));
     } catch (error) {
       return Left(Exception(error));
     }
@@ -32,7 +40,7 @@ class GroceryRepositoryImpl implements GroceryRepository {
   Future<Either<Exception, void>> addGrocery(
       String name, CategoryModel category, int quantity) async {
     try {
-      return Right(await ds.addGrocery(name, quantity, category));
+      return Right(await datasource.addGrocery(name, quantity, category));
     } catch (error) {
       return Left(Exception(error));
     }
@@ -42,7 +50,8 @@ class GroceryRepositoryImpl implements GroceryRepository {
   Future<Either<Exception, void>> updateGrocery(
       String id, String name, CategoryModel category, int quantity) async {
     try {
-      return Right(await ds.updateGrocery(id, name, quantity, category));
+      return Right(
+          await datasource.updateGrocery(id, name, quantity, category));
     } catch (error) {
       return Left(Exception(error));
     }

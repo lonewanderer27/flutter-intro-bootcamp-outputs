@@ -4,14 +4,28 @@ import 'package:my_groceries/features/groceries/data/models/grocery_item_model.d
 import 'package:my_groceries/features/groceries/domain/datasources/groceries_remote_datasource.dart';
 
 class GroceriesRemoteDatasourceImpl implements GroceriesRemoteDatasource {
-  final FirebaseFirestore fs = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore;
 
-  GroceriesRemoteDatasourceImpl();
+  GroceriesRemoteDatasourceImpl(this.firestore);
+
+  @override
+  Stream<List<GroceryItemModel>> watchGroceries() {
+    // get the stream of grocery items collection
+    // then get the snapshots stream
+    final snapshots = firestore.collection('grocery-items').snapshots();
+
+    // get the documents inside of that stream
+    // and map each to a grocery_item_model
+    return snapshots.map((snapshot) => snapshot.docs
+        .map((item) => GroceryItemModel.fromJson(item.data()))
+        .toList());
+  }
 
   @override
   Future<List<GroceryItemModel>> getGroceries() async {
     // fetch the snapshot of the groceries list
-    final snapshot = await fs.collection('grocery-items').get();
+    final snapshot = await firestore.collection('grocery-items').get();
+
     // convert the list of snapshots into list of grocery_item_model
     return snapshot.docs
         .map((item) => GroceryItemModel.fromJson(item.data()))
@@ -20,7 +34,7 @@ class GroceriesRemoteDatasourceImpl implements GroceriesRemoteDatasource {
 
   @override
   Future<GroceryItemModel?> getGrocery(String id) async {
-    final doc = await fs.collection('grocery-items').doc(id).get();
+    final doc = await firestore.collection('grocery-items').doc(id).get();
     if (!doc.exists) return null;
     return GroceryItemModel.fromJson(doc.data()!);
   }
@@ -28,7 +42,7 @@ class GroceriesRemoteDatasourceImpl implements GroceriesRemoteDatasource {
   @override
   Future<void> addGrocery(
       String name, int quantity, CategoryModel category) async {
-    return await fs
+    return await firestore
         .collection('grocery-items')
         .doc()
         .set({'name': name, 'quantity': quantity, 'categoryId': category.id});
@@ -37,13 +51,14 @@ class GroceriesRemoteDatasourceImpl implements GroceriesRemoteDatasource {
   @override
   Future<void> updateGrocery(
       String id, String name, int quantity, CategoryModel category) async {
-    return await fs.collection('grocery-items').doc(id).set(GroceryItemModel(
-            id: id, name: name, quantity: quantity, category: category)
-        .toJson());
+    return await firestore.collection('grocery-items').doc(id).set(
+        GroceryItemModel(
+                id: id, name: name, quantity: quantity, category: category)
+            .toJson());
   }
 
   @override
   Future<void> deleteGrocery(String id) async {
-    return await fs.collection('grocery-items').doc(id).delete();
+    return await firestore.collection('grocery-items').doc(id).delete();
   }
 }

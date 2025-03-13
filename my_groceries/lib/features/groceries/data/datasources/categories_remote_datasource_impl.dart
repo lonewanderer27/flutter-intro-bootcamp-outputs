@@ -3,13 +3,13 @@ import 'package:my_groceries/features/groceries/data/models/category_model.dart'
 import 'package:my_groceries/features/groceries/domain/datasources/categories_remote_datasource.dart';
 
 class CategoriesRemoteDatasourceImpl implements CategoriesRemoteDatasource {
-  final FirebaseFirestore fs = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore;
 
-  CategoriesRemoteDatasourceImpl();
+  CategoriesRemoteDatasourceImpl(this.firestore);
 
   @override
   Future<List<CategoryModel>> getCategories() async {
-    final snapshot = await fs.collection('categories').get();
+    final snapshot = await firestore.collection('categories').get();
     return snapshot.docs
         .map((item) => CategoryModel.fromJson(item.data()))
         .toList();
@@ -17,7 +17,7 @@ class CategoriesRemoteDatasourceImpl implements CategoriesRemoteDatasource {
 
   @override
   Future<CategoryModel> getCategory(String id) async {
-    final doc = await fs.collection('categories').doc(id).get();
+    final doc = await firestore.collection('categories').doc(id).get();
     return CategoryModel.fromJson(doc.data()!);
   }
 }
