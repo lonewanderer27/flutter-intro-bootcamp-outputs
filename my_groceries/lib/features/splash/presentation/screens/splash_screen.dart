@@ -5,12 +5,14 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [Image.asset('assets/images/icon.png')],
-      ),
-    ));
+    return Scaffold(
+      body: Center(
+          child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [Image.asset('assets/images/icon.png')],
+        ),
+      )),
+    );
   }
 }

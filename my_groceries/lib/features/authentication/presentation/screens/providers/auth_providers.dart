@@ -17,5 +17,18 @@ final authRepositoryProvider = Provider<AuthRepositoryImpl>((ref) {
 final userStreamProvider = StreamProvider<AuthUserModel?>((ref) {
   final repo = ref.watch(authRepositoryProvider);
   final res = repo.user();
-  return res.fold((error) => Stream.error(error), (stream) => stream);
+  return res.fold((error) => Stream.error(error), (stream) {
+    final testLoading = false;
+
+    // ignore: dead_code
+    if (testLoading) {
+      return stream.asyncExpand((event) async* {
+        await Future.delayed(Duration(seconds: 5));
+        yield event;
+      });
+    }
+
+    // ignore: dead_code
+    return stream;
+  });
 });

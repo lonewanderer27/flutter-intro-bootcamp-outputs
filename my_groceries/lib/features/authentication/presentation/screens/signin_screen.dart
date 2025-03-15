@@ -10,8 +10,10 @@ class SigninScreen extends StatefulWidget {
 class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Sign In Screen'),
+    return Scaffold(
+      body: const Center(
+        child: Text('Sign In Screen'),
+      ),
     );
   }
 }

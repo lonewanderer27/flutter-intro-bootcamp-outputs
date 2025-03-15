@@ -39,6 +39,7 @@ class MyApp extends ConsumerWidget {
           },
           loading: () => const SplashScreen(),
           error: (Object error, StackTrace stackTrace) =>
+              // TODO: Return NoInternetScreen
               Center(child: Text('Error: $error'))),
     );
   }
