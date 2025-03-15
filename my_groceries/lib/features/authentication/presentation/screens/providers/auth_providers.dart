@@ -14,8 +14,8 @@ final authRepositoryProvider = Provider<AuthRepositoryImpl>((ref) {
   return AuthRepositoryImpl(datasource);
 });
 
-final userStreamProvider = StreamProvider<AuthUserModel>((ref) {
+final userStreamProvider = StreamProvider<AuthUserModel?>((ref) {
   final repo = ref.watch(authRepositoryProvider);
-  final res = repo.user;
+  final res = repo.user();
   return res.fold((error) => Stream.error(error), (stream) => stream);
 });

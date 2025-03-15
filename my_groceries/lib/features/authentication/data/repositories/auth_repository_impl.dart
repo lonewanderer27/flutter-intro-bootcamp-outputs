@@ -53,8 +53,13 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.datasource);
 
   @override
-  Either<Exception, Stream<AuthUserModel>> get user =>
-      throw UnimplementedError();
+  Either<Exception, Stream<AuthUserModel?>> user() {
+    try {
+      return Right(datasource.user);
+    } catch (e) {
+      return Left(Exception(e));
+    }
+  }
 
   @override
   Future<Either<AuthException, AuthUserModel>> createUserWithEmailAndPassword(
