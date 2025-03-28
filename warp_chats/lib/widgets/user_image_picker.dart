@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserImagePicker extends StatefulWidget {
-  const UserImagePicker(
-      {super.key, required this.onPickImage, this.currentImage});
+  const UserImagePicker({super.key, required this.onPickImage, this.currentImage});
   final File? currentImage;
   final void Function(File image) onPickImage;
 
@@ -28,10 +27,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
   Future<void> _pickImage({bool gallery = false}) async {
     XFile? pickedImage;
 
-    pickedImage = await picker.pickImage(
-        maxHeight: 500,
-        maxWidth: 500,
-        source: gallery ? ImageSource.gallery : ImageSource.camera);
+    pickedImage = await picker.pickImage(maxHeight: 500, maxWidth: 500, source: gallery ? ImageSource.gallery : ImageSource.camera);
 
     if (pickedImage == null) return;
 
@@ -41,7 +37,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
     });
     debugPrint('Chosen Image: ${_chosenImage.toString()}');
 
-    Navigator.of(context).pop();
+    if (mounted) Navigator.of(context).pop();
   }
 
   @override
@@ -50,9 +46,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
-          BoxShadow(
-              color: const Color.fromARGB(116, 3, 3, 54),
-              blurRadius: 50 // Shadow position
+          BoxShadow(color: const Color.fromARGB(116, 3, 3, 54), blurRadius: 50 // Shadow position
               ),
         ],
       ),
@@ -86,8 +80,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
                         width: 130,
                         height: 130,
                         decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Image.file(_chosenImage!,
-                            height: 130, fit: BoxFit.cover)),
+                        child: Image.file(_chosenImage!, height: 130, fit: BoxFit.cover)),
                   )
                 : Padding(
                     padding: EdgeInsets.all(20),

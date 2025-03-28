@@ -52,8 +52,11 @@ class _SigninScreenState extends State<SigninScreen> {
       });
     } on FirebaseAuthException catch (error) {
       debugPrint('Auth error: ${error.message}');
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('There has been an error. Try again.')));
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('There has been an error. Try again.')));
+      }
 
       setState(() {
         _isLoading = false;

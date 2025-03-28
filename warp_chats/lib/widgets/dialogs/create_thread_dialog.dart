@@ -40,8 +40,7 @@ class _CreateThreadDialogState extends State<CreateThreadDialog> {
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode(
-              {'userId': fa.currentUser!.uid, 'name': _textController.text}));
+          body: jsonEncode({'userId': fa.currentUser!.uid, 'name': _textController.text}));
 
       inspect(res);
 
@@ -57,7 +56,7 @@ class _CreateThreadDialogState extends State<CreateThreadDialog> {
         isLoading = false;
       });
 
-      Navigator.pop(context);
+      if (mounted) Navigator.pop(context);
     } catch (error) {
       setState(() {
         isLoading = false;
@@ -72,14 +71,9 @@ class _CreateThreadDialogState extends State<CreateThreadDialog> {
       content: TextField(
         controller: _textController,
         readOnly: isLoading,
-        decoration: InputDecoration(
-            hintText: "Enter the name of the chat", errorText: errorText),
+        decoration: InputDecoration(hintText: "Enter the name of the chat", errorText: errorText),
       ),
-      actions: [
-        TextButton(
-            onPressed: handleCreateThread,
-            child: isLoading ? CircularProgressIndicator() : Text('Create'))
-      ],
+      actions: [TextButton(onPressed: handleCreateThread, child: isLoading ? CircularProgressIndicator() : Text('Create'))],
     );
   }
 }

@@ -31,15 +31,13 @@ class _SignupScreenState extends State<SignupScreen> {
     if (Navigator.canPop(context)) {
       Navigator.pop(context);
     } else {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (builder) => SigninScreen()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (builder) => SigninScreen()));
     }
   }
 
   void _showMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _submit() async {
@@ -67,8 +65,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
     try {
       // sign up user
-      UserCredential userCreds = await fa.createUserWithEmailAndPassword(
-          email: _enteredEmail, password: _enteredPassword);
+      UserCredential userCreds = await fa.createUserWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
 
       debugPrint('User creds: $userCreds');
 
@@ -77,10 +74,7 @@ class _SignupScreenState extends State<SignupScreen> {
       String base64Image = base64Encode(imageBytes);
 
       // create our final user object
-      final profile = <String, dynamic>{
-        'username': _enteredUsername,
-        'avatarBase64': base64Image
-      };
+      final profile = <String, dynamic>{'username': _enteredUsername, 'avatarBase64': base64Image};
 
       // upload user information to firebase
       await fs.collection('users').doc(fa.currentUser!.uid).set(profile);
@@ -94,14 +88,14 @@ class _SignupScreenState extends State<SignupScreen> {
       }
 
       // create our very own yourself chat thread
-      final res = await http.post(Uri.parse(
-          '$backendUrl/users/${fa.currentUser!.uid}/create-yourself-thread'));
+      final res = await http.post(Uri.parse('$backendUrl/users/${fa.currentUser!.uid}/create-yourself-thread'));
 
       debugPrint('Yourself Thread: ${res.body}');
 
       // go to chats screen
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (builder) => ThreadsScreen()));
+      if (mounted) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (builder) => ThreadsScreen()));
+      }
 
       setState(() {
         _isLoading = false;
@@ -134,11 +128,8 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 Hero(
                   tag: 'header-image',
-                  child: Container(
-                      margin: const EdgeInsets.only(
-                          top: 30, bottom: 20, left: 20, right: 20),
-                      width: 100,
-                      child: Image.asset(Assets.chat)),
+                  child:
+                      Container(margin: const EdgeInsets.only(top: 30, bottom: 20, left: 20, right: 20), width: 100, child: Image.asset(Assets.chat)),
                 ),
                 Hero(
                   tag: 'header-text',
@@ -148,22 +139,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       Text(
                         'Hi there!',
                         textAlign: TextAlign.left,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
                         'Create your account to get started',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: Colors.white),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                       ),
                     ],
                   ),
@@ -177,8 +160,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Card(
                     margin: const EdgeInsets.all(20),
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 50, left: 16, right: 16, bottom: 16),
+                      padding: const EdgeInsets.only(top: 50, left: 16, right: 16, bottom: 16),
                       child: Form(
                           key: _formKey,
                           child: Column(
@@ -188,9 +170,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 keyboardType: TextInputType.emailAddress,
                                 textCapitalization: TextCapitalization.none,
                                 autocorrect: false,
-                                decoration: InputDecoration(
-                                    icon: Icon(Icons.mail),
-                                    label: Text('Email')),
+                                decoration: InputDecoration(icon: Icon(Icons.mail), label: Text('Email')),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
                                     return 'Please return a valid email';
@@ -206,9 +186,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               TextFormField(
                                 textCapitalization: TextCapitalization.none,
                                 autocorrect: false,
-                                decoration: InputDecoration(
-                                    icon: Icon(Icons.person),
-                                    label: Text('Username')),
+                                decoration: InputDecoration(icon: Icon(Icons.person), label: Text('Username')),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
                                     return 'Please return a valid username';
@@ -228,12 +206,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               TextFormField(
                                 obscureText: true,
                                 autocorrect: false,
-                                decoration: InputDecoration(
-                                    icon: Icon(Icons.lock),
-                                    label: Text('Password')),
+                                decoration: InputDecoration(icon: Icon(Icons.lock), label: Text('Password')),
                                 validator: (value) {
-                                  if (value == null ||
-                                      value.trim().length < 6) {
+                                  if (value == null || value.trim().length < 6) {
                                     return 'Password must be at least 6 characters long';
                                   }
                                   return null;
@@ -249,10 +224,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   if (_isLoading) CircularProgressIndicator(),
-                                  if (!_isLoading)
-                                    TextButton(
-                                        onPressed: _submit,
-                                        child: Text('Sign Up'))
+                                  if (!_isLoading) TextButton(onPressed: _submit, child: Text('Sign Up'))
                                 ],
                               ),
                             ],
@@ -270,10 +242,7 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             Text(
               'Or continue using',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
             ),
             const SizedBox(
               height: 10,
@@ -304,10 +273,7 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 Text(
                   "Already have an account?",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: Colors.white),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
                 ),
                 SizedBox(
                   width: 5,
@@ -316,8 +282,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   onTap: _handleSignIn,
                   child: Text(
                     "Sign In",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 )
               ],
