@@ -6,8 +6,7 @@ import 'package:my_groceries/models/grocery_item.dart';
 import 'package:my_groceries/providers/grocery_items_provider.dart';
 
 class UpdateItemScreen extends ConsumerStatefulWidget {
-  const UpdateItemScreen(
-      {super.key, required this.groceryItem, required this.index});
+  const UpdateItemScreen({super.key, required this.groceryItem, required this.index});
   final int index;
   final GroceryItem groceryItem;
 
@@ -26,8 +25,7 @@ class _UpdateItemScreenState extends ConsumerState<UpdateItemScreen> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.groceryItem.name);
-    _qtyController =
-        TextEditingController(text: widget.groceryItem.quantity.toString());
+    _qtyController = TextEditingController(text: widget.groceryItem.quantity.toString());
     _selectedCategory = widget.groceryItem.category;
   }
 
@@ -38,24 +36,19 @@ class _UpdateItemScreenState extends ConsumerState<UpdateItemScreen> {
 
       var hasUpdated = await ref
           .read(groceryItemsProvider.notifier)
-          .replaceItem(
-              widget.groceryItem.id,
-              _nameController.value.text,
-              int.tryParse(_qtyController.value.text)!,
-              _selectedCategory,
-              widget.index);
+          .replaceItem(widget.groceryItem.id, _nameController.value.text, int.tryParse(_qtyController.value.text)!, _selectedCategory, widget.index);
 
       if (hasUpdated == true) {
         // close this update screen
-        Navigator.of(context).pop();
-
+        if (mounted) Navigator.of(context).pop();
         return;
       }
 
       // otherwise warn the user through a snackbar that update has failed
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          duration: const Duration(seconds: 3),
-          content: Text(ref.read(groceryItemsProvider).error!)));
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(duration: const Duration(seconds: 3), content: Text(ref.read(groceryItemsProvider).error!)));
+      }
     }
   }
 
@@ -76,9 +69,7 @@ class _UpdateItemScreenState extends ConsumerState<UpdateItemScreen> {
                       maxLength: 50,
                       decoration: const InputDecoration(label: Text('Name')),
                       validator: (value) {
-                        if (value == null ||
-                            value.isEmpty ||
-                            value.length > 50) {
+                        if (value == null || value.isEmpty || value.length > 50) {
                           return 'Please enter a valid item name';
                         }
 
@@ -93,14 +84,10 @@ class _UpdateItemScreenState extends ConsumerState<UpdateItemScreen> {
                       Expanded(
                         child: TextFormField(
                           controller: _qtyController,
-                          decoration:
-                              const InputDecoration(label: Text('Quantity')),
+                          decoration: const InputDecoration(label: Text('Quantity')),
                           keyboardType: TextInputType.number,
                           validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                int.tryParse(value) == null ||
-                                int.tryParse(value)! <= 0) {
+                            if (value == null || value.isEmpty || int.tryParse(value) == null || int.tryParse(value)! <= 0) {
                               return 'Please enter a valid quantity';
                             }
 
@@ -136,8 +123,7 @@ class _UpdateItemScreenState extends ConsumerState<UpdateItemScreen> {
                           });
                         },
                         value: _selectedCategory,
-                        decoration:
-                            const InputDecoration(label: Text('Category')),
+                        decoration: const InputDecoration(label: Text('Category')),
                       ))
                     ],
                   ),
