@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:expense_tracker/widgets/modals/expenses_modal.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/theme/color_scheme.dart';
@@ -7,32 +5,28 @@ import 'package:expense_tracker/theme/theme.dart';
 import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/expenses_list.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MaterialApp(
-    home: ExpenseTrackerApp(prefs),
+    home: ExpenseTrackerApp(),
     theme: theme,
     darkTheme: ThemeData.dark().copyWith(colorScheme: kDarkColorScheme),
   ));
 }
 
 class ExpenseTrackerApp extends StatefulWidget {
-  final SharedPreferences prefs;
-  const ExpenseTrackerApp(this.prefs, {super.key});
+  const ExpenseTrackerApp({super.key});
 
   @override
   State<ExpenseTrackerApp> createState() => _ExpenseTrackerAppState();
 }
 
 class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
-  List<Expense> _expenses = [];
+  final List<Expense> _expenses = [];
 
   void _addExpense(Expense expense) {
     setState(() {
       _expenses.add(expense);
-      _saveToPrefs();
     });
   }
 
@@ -43,7 +37,6 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
     // replace the expense object at the index
     setState(() {
       _expenses[index] = expense;
-      _saveToPrefs();
     });
 
     // show the snackbar
@@ -56,7 +49,6 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
           onPressed: () {
             setState(() {
               _expenses[index] = oldExpense;
-              _saveToPrefs();
             });
           }),
     ));
@@ -68,7 +60,6 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
 
     setState(() {
       _expenses.removeWhere((exp) => exp.id == id);
-      _saveToPrefs();
     });
 
     // show the snackbar
@@ -81,7 +72,6 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
           onPressed: () {
             setState(() {
               _expenses.insert(index, removedExpense);
-              _saveToPrefs();
             });
           }),
     ));
@@ -97,12 +87,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
         isScrollControlled: true,
         useSafeArea: true,
         context: context,
-        builder: (ctx) => ExpensesModal(
-            addExpense: _addExpense,
-            editExpense: _updateExpense,
-            update: edit,
-            expense: expense,
-            index: index));
+        builder: (ctx) => ExpensesModal(addExpense: _addExpense, editExpense: _updateExpense, update: edit, expense: expense, index: index));
   }
 
   void _openEditExpenseModal(String id, int index) {
@@ -110,43 +95,6 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
     var expense = _expenses.firstWhere((exp) => exp.id == id);
 
     _openExpenseModal(edit: true, expense: expense, index: index);
-  }
-
-  void _saveToPrefs() async {
-    List<Map<String, dynamic>> jsonExpenses =
-        _expenses.map((expense) => expense.toJSON()).toList();
-    String jsonString = jsonEncode(jsonExpenses);
-    await widget.prefs.setString('expenses', jsonString);
-  }
-
-  void _clearPrefs() async {
-    await widget.prefs.clear();
-    setState(() {
-      _expenses = [];
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    String? jsonExpenses = widget.prefs.getString('expenses');
-
-    if (jsonExpenses == null) {
-      // if expenses cannot be found in the preferences
-      // initialize it as empty list
-      _expenses = [];
-      return;
-    }
-
-    // otherwise decode the JSON string to valid list
-    List<dynamic> jsonData = jsonDecode(jsonExpenses);
-
-    // convert list of maps to list of expenses
-    List<Expense> expenses =
-        jsonData.map((rawExp) => Expense.fromJSON(rawExp)).toList();
-
-    // assign it to our _expenses list
-    _expenses = expenses;
   }
 
   @override
@@ -169,9 +117,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Expenses Tracker'),
-        actions: [
-          IconButton(onPressed: _openExpenseModal, icon: const Icon(Icons.add))
-        ],
+        actions: [IconButton(onPressed: _openExpenseModal, icon: const Icon(Icons.add))],
       ),
       body: Container(
         decoration: const BoxDecoration(),

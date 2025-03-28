@@ -95,6 +95,7 @@ class _ExpensesModalState extends State<ExpensesModal> {
 
     // create an instance of expense
     var newExpense = Expense(
+        id: widget.update == true ? widget.expense!.id : null,
         amount: enteredAmt,
         title: _titleController.text,
         date: _dateTime!,

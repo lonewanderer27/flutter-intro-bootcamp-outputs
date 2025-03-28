@@ -11,8 +11,9 @@ class Expense {
       {required this.amount,
       required this.title,
       required this.date,
-      required this.category})
-      : id = uuid.v4();
+      required this.category,
+      String? id})
+      : id = id ?? uuid.v4();
 
   String get formattedDate {
     return dateFormatter.format(date);
@@ -23,7 +24,8 @@ class Expense {
         amount: json['amount'],
         title: json['title'],
         date: json['date'],
-        category: json['category']);
+        category: json['category'],
+        id: json['id']);
   }
 
   Map<String, dynamic> toJSON() {
@@ -31,7 +33,8 @@ class Expense {
       'amount': amount,
       'title': title,
       'date': date,
-      'category': category
+      'category': category,
+      'id': id
     };
   }
 

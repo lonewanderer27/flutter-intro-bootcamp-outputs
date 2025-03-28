@@ -5,11 +5,7 @@ import 'package:flutter/material.dart';
 class ExpensesList extends StatelessWidget {
   final void Function(String id, int index) removeExpense;
   final void Function(String id, int index) editExpense;
-  const ExpensesList(
-      {super.key,
-      required this.expenses,
-      required this.removeExpense,
-      required this.editExpense});
+  const ExpensesList({super.key, required this.expenses, required this.removeExpense, required this.editExpense});
 
   final List<Expense> expenses;
 
@@ -20,13 +16,11 @@ class ExpensesList extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(12)),
             color: Theme.of(context).colorScheme.error,
           ),
-          margin: EdgeInsets.symmetric(
-              horizontal: Theme.of(context).cardTheme.margin!.horizontal),
+          margin: EdgeInsets.symmetric(horizontal: 20),
           child: Center(
             child: Text(
               'Delete',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -44,7 +38,6 @@ class ExpensesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemBuilder: _itemBuilder, itemCount: expenses.length);
+    return ListView.builder(itemBuilder: _itemBuilder, itemCount: expenses.length);
   }
 }
