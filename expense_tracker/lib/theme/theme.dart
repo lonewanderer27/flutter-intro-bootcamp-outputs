@@ -1,4 +1,4 @@
-import 'package:expense_tracker/theme/colorScheme.dart';
+import 'package:expense_tracker/theme/color_scheme.dart';
 import 'package:flutter/material.dart';
 
 var theme = ThemeData().copyWith(
