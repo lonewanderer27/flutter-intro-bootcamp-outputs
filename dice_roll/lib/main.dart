@@ -63,26 +63,24 @@ class _DiceAppState extends State<DiceApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(20.00),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _rolling == true
-                      ? DiceRolling()
-                      : Padding(
-                          padding: const EdgeInsets.only(top: 60, bottom: 60),
-                          child: Dice(no: _currentDice)),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: ElevatedButton(
-                        onPressed: _rolling == false ? _roll : null,
-                        child: Text(_rolling == false ? 'Roll' : 'Rolling')),
-                  )
-                ],
-              ),
+        body: Padding(
+          padding: const EdgeInsets.all(20.00),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _rolling == true
+                    ? DiceRolling()
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 60, bottom: 60),
+                        child: Dice(no: _currentDice)),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: ElevatedButton(
+                      onPressed: _rolling == false ? _roll : null,
+                      child: Text(_rolling == false ? 'Roll' : 'Rolling')),
+                )
+              ],
             ),
           ),
         ),
