@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:dice_roll/constants/assets.dart';
 
 class DiceRolling extends StatefulWidget {
   const DiceRolling({super.key});
@@ -28,7 +29,7 @@ class _DiceRollingState extends State<DiceRolling>
 
   @override
   Widget build(BuildContext context) {
-    return Lottie.asset('assets/animation/dice_roll.json',
+    return Lottie.asset(Assets.diceRollAnim,
         controller: _controller, onLoaded: (comp) {
       _controller
         ..duration = comp.duration
