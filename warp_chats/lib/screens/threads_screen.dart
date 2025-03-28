@@ -40,15 +40,10 @@ class _ThreadsScreenState extends State<ThreadsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    myThreads = fs
-        .collection('user_threads')
-        .doc(fa.currentUser!.uid)
-        .collection('threads')
-        .snapshots();
+    myThreads = fs.collection('user_threads').doc(fa.currentUser!.uid).collection('threads').snapshots();
 
     myThreads.listen((snapshot) async {
-      await _subscribeToThreads(
-          snapshot.docs.map((thread) => thread.id).toList());
+      await _subscribeToThreads(snapshot.docs.map((thread) => thread.id).toList());
     });
 
     return StreamBuilder(
@@ -74,9 +69,7 @@ class _ThreadsScreenState extends State<ThreadsScreen> {
               itemBuilder: (ctx, index) {
                 // create a new Thread item
 
-                Thread thread = Thread(
-                    id: loadedThreads[index].id,
-                    name: loadedThreads[index].get('name'));
+                Thread thread = Thread(id: loadedThreads[index].id, name: loadedThreads[index].get('name'));
 
                 return ThreadItem(thread);
               });
