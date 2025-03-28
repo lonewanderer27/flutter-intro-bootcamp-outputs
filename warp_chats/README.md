@@ -1,16 +1,40 @@
-# warp_chats
+# Warp Chats
 
-A new Flutter project.
+A Flutter application that connects to a backend server.
 
-## Getting Started
+## Prerequisites
 
-This project is a starting point for a Flutter application.
+- [Flutter](https://flutter.dev/docs/get-started/install) installed on your machine
+- An IDE (VS Code, Android Studio, etc.)
+- A physical device or emulator/simulator
 
-A few resources to get you started if this is your first Flutter project:
+## Setup
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Clone this repository
+2. Navigate to the project directory
+3. Run `flutter pub get` to install dependencies
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Environment Configuration
+
+This app requires a backend server connection. Configure the backend URL in the `.env` file:
+
+```
+BACKEND_URL=http://<IP_ADDR>:3000
+```
+
+Replace `<IP_ADDR>` with the actual IP address of your backend server.
+
+> **Note:** Do not use `localhost` or `127.0.0.1` as the IP address if you're testing on a physical device, as these addresses point to the device itself, not your development machine.
+
+## Running the App
+
+```bash
+flutter run
+```
+
+## Troubleshooting
+
+If you encounter connection issues:
+- Verify your backend server is running
+- Ensure the IP address in the `.env` file is correct
+- Check that your device/emulator can access the network where the backend is hosted
