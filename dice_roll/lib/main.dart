@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dice_roll/widgets/dice.dart';
 import 'package:dice_roll/widgets/dice_rolling.dart';
 import 'package:flutter/material.dart';
+import 'package:dice_roll/constants/assets.dart';
 
 void main() {
   runApp(DiceApp());
@@ -22,7 +23,7 @@ class _DiceAppState extends State<DiceApp> {
   bool _rolling = false;
 
   Future<void> _playSound() async {
-    await _player.play(AssetSource('sounds/dice_roll.mp3'), volume: 100.00);
+    await _player.play(AssetSource(Assets.diceRollSound), volume: 100.00);
   }
 
   @override
