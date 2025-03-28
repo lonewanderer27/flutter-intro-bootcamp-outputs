@@ -13,29 +13,20 @@ class MealsScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Uh oh... Nothing is here',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Theme.of(context).colorScheme.onSurface)),
+          Text('Uh oh... Nothing is here', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
           SizedBox(
             height: 10,
           ),
           Text(
             'Try selecting a different category.',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: Theme.of(context).colorScheme.onSurface),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface),
           )
         ],
       ),
     );
 
     if (meals.isNotEmpty) {
-      content = ListView.builder(
-          itemCount: meals.length,
-          itemBuilder: (ctx, index) => MealItem(meal: meals[index]));
+      content = ListView.builder(itemCount: meals.length, itemBuilder: (ctx, index) => MealItem(meal: meals[index]));
     }
 
     if (title == null) {
@@ -46,9 +37,7 @@ class MealsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Hero(
             tag: title!,
-            child: Text(title!,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground))),
+            child: Text(title!, style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface))),
       ),
       body: content,
     );

@@ -57,14 +57,10 @@ class MealItem extends StatelessWidget {
                           //     fontSize: 20,
                           //     fontWeight: FontWeight.bold,
                           //     color: Colors.white),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                         ),
                       ),

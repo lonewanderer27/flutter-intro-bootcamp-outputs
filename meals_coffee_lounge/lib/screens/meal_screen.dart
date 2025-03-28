@@ -23,14 +23,11 @@ class MealScreen extends ConsumerWidget {
     final isFavorite = ref.watch(favoriteMealsProvider).contains(meal.id);
 
     void showInfoMessage(String message) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
     }
 
     void markAsFavorite() {
-      bool added = ref
-          .read(favoriteMealsProvider.notifier)
-          .toggleMealFavoriteStatus(meal.id);
+      bool added = ref.read(favoriteMealsProvider.notifier).toggleMealFavoriteStatus(meal.id);
 
       if (added) {
         showInfoMessage('Marked as favorite');
@@ -40,11 +37,7 @@ class MealScreen extends ConsumerWidget {
       showInfoMessage('Meal is no longer a favorite');
     }
 
-    void seeTaggedMeals(
-        {bool glutenFree = false,
-        bool lactoseFree = false,
-        bool vegetarian = false,
-        bool vegan = false}) {
+    void seeTaggedMeals({bool glutenFree = false, bool lactoseFree = false, bool vegetarian = false, bool vegan = false}) {
       debugPrint('asked for gluten free meals? $glutenFree');
       debugPrint('asked for lactose free meals? $lactoseFree');
       debugPrint('asked for vegetarian meals? $vegetarian');
@@ -77,20 +70,15 @@ class MealScreen extends ConsumerWidget {
         appBar: AppBar(
           title: Hero(
             tag: meal.title,
-            child: Text(meal.title,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground)),
+            child: Text(meal.title, style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
           ),
           actions: [
             IconButton(
                 onPressed: markAsFavorite,
                 icon: AnimatedSwitcher(
                     duration: Duration(milliseconds: 500),
-                    transitionBuilder:
-                        (Widget child, Animation<double> animation) {
-                      return RotationTransition(
-                          turns: Tween(begin: 0.8, end: 1.0).animate(animation),
-                          child: child);
+                    transitionBuilder: (Widget child, Animation<double> animation) {
+                      return RotationTransition(turns: Tween(begin: 0.8, end: 1.0).animate(animation), child: child);
                     },
                     child: Icon(
                       isFavorite ? Icons.star : Icons.star_outline,
@@ -119,8 +107,7 @@ class MealScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const TabBar(
-                        tabs: [Tab(text: 'Ingredients'), Tab(text: 'Steps')]),
+                    const TabBar(tabs: [Tab(text: 'Ingredients'), Tab(text: 'Steps')]),
                     // TabBarView inside Expanded
                     Expanded(
                       child: TabBarView(
@@ -135,11 +122,8 @@ class MealScreen extends ConsumerWidget {
                             padding: const EdgeInsets.all(20),
                             children: meal.steps.map((step) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 3, horizontal: 5),
-                                child: Text(step,
-                                    style:
-                                        const TextStyle(color: Colors.white)),
+                                padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+                                child: Text(step, style: const TextStyle(color: Colors.white)),
                               );
                             }).toList(),
                           ),

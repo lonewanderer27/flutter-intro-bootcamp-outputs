@@ -27,8 +27,7 @@ class FiltersScreen extends ConsumerWidget {
             break;
           case 'meals':
             {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (ctx) => const TabsScreen()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => const TabsScreen()));
             }
         }
       }),
@@ -37,16 +36,11 @@ class FiltersScreen extends ConsumerWidget {
           SwitchListTile(
             value: activeFilters[Filter.lactoseFree]!,
             onChanged: (val) {
-              ref
-                  .read(filtersProvider.notifier)
-                  .setFilter(Filter.lactoseFree, val);
+              ref.read(filtersProvider.notifier).setFilter(Filter.lactoseFree, val);
             },
-            title: Text('Lactose-free',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground)),
+            title: Text('Lactose-free', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
             subtitle: Text('Only include lactose-free meals.',
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground)),
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
             activeColor: Theme.of(context).colorScheme.tertiary,
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
@@ -54,20 +48,14 @@ class FiltersScreen extends ConsumerWidget {
             value: activeFilters[Filter.glutenFree]!,
             onChanged: (val) {
               // set the global gluten free filter
-              ref
-                  .read(filtersProvider.notifier)
-                  .setFilter(Filter.glutenFree, val);
+              ref.read(filtersProvider.notifier).setFilter(Filter.glutenFree, val);
             },
             title: Text(
               'Gluten-free',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Theme.of(context).colorScheme.onBackground),
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface),
             ),
             subtitle: Text('Only include gluten-free meals.',
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground)),
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
             activeColor: Theme.of(context).colorScheme.tertiary,
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
@@ -75,16 +63,11 @@ class FiltersScreen extends ConsumerWidget {
             value: activeFilters[Filter.vegetarianFree]!,
             onChanged: (val) {
               // set the global vegetarian filter
-              ref
-                  .read(filtersProvider.notifier)
-                  .setFilter(Filter.vegetarianFree, val);
+              ref.read(filtersProvider.notifier).setFilter(Filter.vegetarianFree, val);
             },
-            title: Text('Vegetarian',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground)),
+            title: Text('Vegetarian', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
             subtitle: Text('Only include vegetarian meals.',
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground)),
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
             activeColor: Theme.of(context).colorScheme.tertiary,
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
@@ -94,12 +77,9 @@ class FiltersScreen extends ConsumerWidget {
               // set the global vegan filter
               ref.read(filtersProvider.notifier).setFilter(Filter.vegan, val);
             },
-            title: Text('Vegan',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground)),
+            title: Text('Vegan', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
             subtitle: Text('Only include vegan meals.',
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground)),
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
             activeColor: Theme.of(context).colorScheme.tertiary,
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           )

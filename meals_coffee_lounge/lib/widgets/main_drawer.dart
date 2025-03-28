@@ -20,35 +20,24 @@ class MainDrawer extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: Row(
               children: [
-                Icon(Icons.fastfood,
-                    size: 48, color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.fastfood, size: 48, color: Theme.of(context).colorScheme.primary),
                 SizedBox(width: 18),
-                Text('Cooking Up!',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(color: Theme.of(context).colorScheme.primary))
+                Text('Cooking Up!', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.primary))
               ],
             ),
           ),
           ListTile(
-            leading: Icon(Icons.restaurant,
-                size: 26, color: Theme.of(context).colorScheme.onBackground),
-            title: Text('Meals',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24)),
+            leading: Icon(Icons.restaurant, size: 26, color: Theme.of(context).colorScheme.onSurface),
+            title:
+                Text('Meals', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface, fontSize: 24)),
             onTap: () {
               onSelectScreen('meals');
             },
           ),
           ListTile(
-            leading: Icon(Icons.settings,
-                size: 26, color: Theme.of(context).colorScheme.onBackground),
+            leading: Icon(Icons.settings, size: 26, color: Theme.of(context).colorScheme.onSurface),
             title: Text('Filters',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24)),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface, fontSize: 24)),
             onTap: () {
               onSelectScreen('filters');
             },
