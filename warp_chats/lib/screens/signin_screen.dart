@@ -22,7 +22,8 @@ class _SigninScreenState extends State<SigninScreen> {
   bool _isLoading = false;
 
   void _handleSignUp() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (builder) => SignupScreen()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (builder) => SignupScreen()));
   }
 
   Future<void> _submit() async {
@@ -43,7 +44,8 @@ class _SigninScreenState extends State<SigninScreen> {
 
     try {
       // sign in user
-      UserCredential userCreds = await fa.signInWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
+      UserCredential userCreds = await fa.signInWithEmailAndPassword(
+          email: _enteredEmail, password: _enteredPassword);
 
       debugPrint('User creds: $userCreds');
 
@@ -55,7 +57,8 @@ class _SigninScreenState extends State<SigninScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('There has been an error. Try again.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('There has been an error. Try again.')));
       }
 
       setState(() {
@@ -75,22 +78,29 @@ class _SigninScreenState extends State<SigninScreen> {
           children: [
             Hero(
                 tag: 'header-image',
-                child:
-                    Container(margin: const EdgeInsets.only(top: 30, bottom: 20, left: 20, right: 20), width: 200, child: Image.asset(Assets.chat))),
+                child: Container(
+                    margin: const EdgeInsets.only(
+                        top: 30, bottom: 20, left: 20, right: 20),
+                    width: 200,
+                    child: Image.asset(Assets.chat))),
             Hero(
               tag: 'header-text',
               child: Column(
                 children: [
                   Text(
                     'Welcome back!',
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Text(
                     "Please enter your credentials to continue",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.white),
                   )
                 ],
               ),
@@ -108,7 +118,8 @@ class _SigninScreenState extends State<SigninScreen> {
                           keyboardType: TextInputType.emailAddress,
                           textCapitalization: TextCapitalization.none,
                           autocorrect: false,
-                          decoration: InputDecoration(icon: Icon(Icons.mail), label: Text('Email')),
+                          decoration: InputDecoration(
+                              icon: Icon(Icons.mail), label: Text('Email')),
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
                               return 'Please return a valid email';
@@ -124,7 +135,8 @@ class _SigninScreenState extends State<SigninScreen> {
                         TextFormField(
                           obscureText: true,
                           autocorrect: false,
-                          decoration: InputDecoration(icon: Icon(Icons.lock), label: Text('Password')),
+                          decoration: InputDecoration(
+                              icon: Icon(Icons.lock), label: Text('Password')),
                           validator: (value) {
                             if (value == null || value.trim().length < 6) {
                               return 'Password must be at least 6 characters long';
@@ -142,38 +154,40 @@ class _SigninScreenState extends State<SigninScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             if (_isLoading) CircularProgressIndicator(),
-                            if (!_isLoading) TextButton(onPressed: _submit, child: Text('Sign In'))
+                            if (!_isLoading)
+                              TextButton(
+                                  onPressed: _submit, child: Text('Sign In'))
                           ],
                         ),
                       ],
                     )),
               ),
             ),
-            Text(
-              'Or continue using',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: const EdgeInsets.all(20),
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.red,
-                  ),
-                  child: Image.asset(
-                    'assets/images/google.png',
-                    scale: 1.2,
-                  ),
-                ),
-              ],
-            ),
+            // Text(
+            //   'Or continue using',
+            //   style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
+            // ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     ElevatedButton(
+            //       onPressed: () {},
+            //       style: ElevatedButton.styleFrom(
+            //         shape: CircleBorder(),
+            //         padding: const EdgeInsets.all(20),
+            //         backgroundColor: Colors.blue,
+            //         foregroundColor: Colors.red,
+            //       ),
+            //       child: Image.asset(
+            //         'assets/images/google.png',
+            //         scale: 1.2,
+            //       ),
+            //     ),
+            //   ],
+            // ),
             SizedBox(
               height: 30,
             ),
@@ -182,7 +196,10 @@ class _SigninScreenState extends State<SigninScreen> {
               children: [
                 Text(
                   "Don't have an account?",
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: Colors.white),
                 ),
                 SizedBox(
                   width: 5,
@@ -191,7 +208,8 @@ class _SigninScreenState extends State<SigninScreen> {
                   onTap: _handleSignUp,
                   child: Text(
                     "Sign Up",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 )
               ],

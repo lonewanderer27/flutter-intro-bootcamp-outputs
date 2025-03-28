@@ -240,31 +240,31 @@ class _SignupScreenState extends State<SignupScreen> {
                 )
               ],
             ),
-            Text(
-              'Or continue using',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: const EdgeInsets.all(20),
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.red,
-                  ),
-                  child: Image.asset(
-                    'assets/images/google.png',
-                    scale: 1.2,
-                  ),
-                ),
-              ],
-            ),
+            // Text(
+            //   'Or continue using',
+            //   style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
+            // ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     ElevatedButton(
+            //       onPressed: () {},
+            //       style: ElevatedButton.styleFrom(
+            //         shape: CircleBorder(),
+            //         padding: const EdgeInsets.all(20),
+            //         backgroundColor: Colors.blue,
+            //         foregroundColor: Colors.red,
+            //       ),
+            //       child: Image.asset(
+            //         'assets/images/google.png',
+            //         scale: 1.2,
+            //       ),
+            //     ),
+            //   ],
+            // ),
             SizedBox(
               height: 30,
             ),
