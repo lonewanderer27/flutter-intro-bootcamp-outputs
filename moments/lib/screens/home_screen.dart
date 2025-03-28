@@ -16,8 +16,7 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen>
-    with TickerProviderStateMixin {
+class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStateMixin {
   late Future<void> _placesFuture;
   late PageController pageController;
   late TabController _tabController;
@@ -54,8 +53,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     void handleCamPress() {
       // if we're on the slides then set the current page to the last
       if (_currentPageIndex < slides.length - 1) {
-        pageController.animateToPage(slides.length - 1,
-            duration: Durations.long2, curve: Curves.decelerate);
+        pageController.animateToPage(slides.length - 1, duration: Durations.long2, curve: Curves.decelerate);
         return;
       }
 
@@ -63,8 +61,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       ref.read(cameraProvider.notifier).takePicture().then((image) {
         if (image == null) return;
         var pickedImage = File(image.path);
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (ctx) => NewPlaceScreen(pickedImage, pageController)));
+        if (!mounted) return;
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => NewPlaceScreen(pickedImage, pageController)));
       });
     }
 
@@ -72,8 +71,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       ref.read(cameraProvider.notifier).selectFromGallery().then((image) {
         if (image == null) return;
         var pickedImage = File(image.path);
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (ctx) => NewPlaceScreen(pickedImage, pageController)));
+        if (!mounted) return;
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => NewPlaceScreen(pickedImage, pageController)));
       });
     }
 
@@ -84,21 +84,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           Expanded(
             child: FutureBuilder(
               future: _placesFuture,
-              builder: (ctx, snapshot) =>
-                  snapshot.connectionState == ConnectionState.waiting
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : PageView(
-                          controller: pageController,
-                          onPageChanged: (page) {
-                            setState(() {
-                              debugPrint('current page: $page');
-                              _currentPageIndex = page;
-                            });
-                          },
-                          children: slides,
-                        ),
+              builder: (ctx, snapshot) => snapshot.connectionState == ConnectionState.waiting
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : PageView(
+                      controller: pageController,
+                      onPageChanged: (page) {
+                        setState(() {
+                          debugPrint('current page: $page');
+                          _currentPageIndex = page;
+                        });
+                      },
+                      children: slides,
+                    ),
             ),
           ),
           Padding(
@@ -108,32 +107,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               children: [
                 AnimatedScale(
                   duration: Duration(milliseconds: 300),
-                  scale:
-                      _currentPageIndex < slides.length - 1 && slides.isNotEmpty
-                          ? 1.0
-                          : 0.0,
-                  child:
-                      _currentPageIndex < slides.length - 1 && slides.isNotEmpty
-                          ? Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(25)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 15),
-                                    child: SmoothPageIndicator(
-                                        controller: pageController,
-                                        count: slides.length),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                              ],
-                            )
-                          : SizedBox.shrink(),
+                  scale: _currentPageIndex < slides.length - 1 && slides.isNotEmpty ? 1.0 : 0.0,
+                  child: _currentPageIndex < slides.length - 1 && slides.isNotEmpty
+                      ? Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                child: SmoothPageIndicator(controller: pageController, count: slides.length),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        )
+                      : SizedBox.shrink(),
                 ),
                 ElevatedButton(
                   onPressed: handleCamPress,
@@ -150,9 +140,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   scale: _currentPageIndex == slides.length - 1 ? 1.0 : 0.0,
                   duration: Duration(milliseconds: 300),
                   child: _currentPageIndex == slides.length - 1
-                      ? IconButton.outlined(
-                          onPressed: handleGalleryPress,
-                          icon: Icon(Icons.image))
+                      ? IconButton.outlined(onPressed: handleGalleryPress, icon: Icon(Icons.image))
                       : SizedBox.shrink(),
                 )
               ],
