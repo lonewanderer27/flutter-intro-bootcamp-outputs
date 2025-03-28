@@ -1,33 +1,65 @@
-# Express.js on Vercel
+# Warp Chats Backend
 
-Simple Express.js + Vercel example that uses Vercel Postgres to add and display users in a table.
+This repository contains a Node.js Express backend application. Follow the steps below to set up and run the project.
 
-## How to Use
+## Prerequisites
 
-BE sure to create a Vercel Postgres database and add you environment variables to your `.env` file. You can find an example of the `.env` file in the `.env.example` file.
+Ensure you have the following installed on your system:
 
-You can choose from one of the following two methods to use this repository:
+- [Node.js](https://nodejs.org/) (v16 or later recommended)
+- [npm](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager) (preferred package manager for this project)
 
-### One-Click Deploy
+## Getting Started
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/examples/tree/main/solutions/express&project-name=express&repository-name=express)
-
-### Clone and Deploy
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/vercel/examples/tree/main/solutions/express
+git clone <repository-url>
+cd <repository-folder>
 ```
 
-Install the Vercel CLI:
+### 2. Install Dependencies
+Install the required dependencies using npm:
 
 ```bash
-npm i -g vercel
+npm install
 ```
 
-Then run the app at the root of the repository:
+### 3. Set Up Environment Variables
+Create a .env file in the root directory by copying the example file:
 
 ```bash
-vercel dev
+cp .env.example .env
 ```
+
+
+### 4. Set Up Environment Variables
+Create a .env file in the root directory by copying the example file:
+
+```bash
+cp .env.example .env
+```
+Edit the .env file to include environment-specific variables (e.g., Firebase credentials, API keys, etc.).
+
+### 5. Run the Application
+Start the development server:
+```
+npm start
+```
+The server will start on the port 3000 by default
+
+Project Structure
+- api/index.ts: Entry point of the application.
+- api/config/: Configuration files (e.g., Firebase setup).
+- api/controllers/: Controllers for handling business logic.
+- api/enums/: Enumerations used across the app.
+- api/middlewares/: Middleware functions for request handling.
+- api/routes/: API route definitions.
+- api/utils/: Utility functions.
+
+Scripts
+- pnpm start: Start the application.
+- pnpm dev: Start the application in development mode with hot-reloading.
+- pnpm build: Build the application for production.
+
+
