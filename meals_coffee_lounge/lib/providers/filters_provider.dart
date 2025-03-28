@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals_coffee_lounge/constants/kInitialFilters.dart';
+import 'package:meals_coffee_lounge/constants/k_initial_filters.dart';
 import 'package:meals_coffee_lounge/data/meals.dart';
 import 'package:meals_coffee_lounge/enums/filter.dart';
 
