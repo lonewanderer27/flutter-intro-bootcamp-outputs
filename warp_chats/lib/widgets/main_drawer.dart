@@ -25,36 +25,25 @@ class MainDrawer extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: Row(
               children: [
-                Icon(Icons.forum,
-                    size: 48, color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.forum, size: 48, color: Theme.of(context).colorScheme.primary),
                 SizedBox(width: 18),
-                Text('Warp Chats',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(color: Theme.of(context).colorScheme.primary))
+                Text('Warp Chats', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.primary))
               ],
             ),
           ),
           ListTile(
-            leading: Icon(Icons.public,
-                size: 26, color: Theme.of(context).colorScheme.onBackground),
+            leading: Icon(Icons.public, size: 26, color: Theme.of(context).colorScheme.onSurface),
             title: Text('Public Chat',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24)),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface, fontSize: 24)),
             onTap: () {
               onSelectScreen(Pages.publicChat);
               dismiss();
             },
           ),
           ListTile(
-            leading: Icon(Icons.chat_bubble_outline,
-                size: 26, color: Theme.of(context).colorScheme.onBackground),
+            leading: Icon(Icons.chat_bubble_outline, size: 26, color: Theme.of(context).colorScheme.onSurface),
             title: Text('Conversations',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24)),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface, fontSize: 24)),
             onTap: () {
               onSelectScreen(Pages.conversations);
               dismiss();
